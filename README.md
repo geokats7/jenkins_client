@@ -4,7 +4,7 @@ trigger jobs remotely, poll the jenkins server for the result of a specific buil
 get status of last builds and many more.
 
 
-#### Required
+#### Required to use the client
 
 - Jenkins server url
 - Username and password (or API key) for the Jenkins server
@@ -21,4 +21,4 @@ js.start_job(job_name, params) # params must be a python dictionary
 ~~~
 
 ---
-###### Contact QA team in order to add more actions in the package.
+###### Contact QA team in order to add more actions to the package.
