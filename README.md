@@ -10,7 +10,7 @@ get status of last builds and many more.
 - Username and password (or API key) for the Jenkins server
 
 #### Example of usage
-~~~
+~~~python
 from jenkins_client import JenkinsClient
 
 jc = JenkinsClient(jenkins_base_url="https://ci.orfium.com/jenkins",
