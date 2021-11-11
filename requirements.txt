@@ -11,7 +11,7 @@ jenkinsapi==0.3.11
 pytz==2020.1
 requests==2.24.0
 six==1.15.0
-urllib3==1.25.10
+urllib3>=1.26.5
 virtualenv==20.0.33
 virtualenv-clone==0.5.4
 zipp==3.3.0
