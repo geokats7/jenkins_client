@@ -6,6 +6,7 @@ from jenkinsapi.build import Build
 from jenkinsapi.queue import QueueItem
 from jenkinsapi.custom_exceptions import NotBuiltYet
 from requests import HTTPError
+import fire
 
 
 class JenkinsClient:
@@ -84,3 +85,7 @@ class JenkinsClient:
             time.sleep(self.job_poll_interval)
 
 
+# jc = JenkinsClient(jenkins_base_url='https://ci.dev.orfium.com', username='auto', password='112e0f00f7e3257a5b355c2a65caf1da99')
+
+if __name__ == '__main__':
+    fire.Fire(JenkinsClient)
