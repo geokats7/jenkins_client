@@ -1,0 +1,22 @@
+  name: jenkins-job
+  description: 'Start Jenkins job'
+  branding:
+      icon: "check"
+      color: orange
+  inputs:
+      jenkins_url:
+          description: 'Jenkins URL'
+          required: true
+      jenkins_user:
+          description: 'Jenkins user'
+          required: true
+      jenkins_password:
+          description: 'Jenkins password'
+          required: true
+  runs:
+      image: "Dockerfile"
+      using: "docker"
+      args:
+          - ${{ inputs.jenkins_url }}
+          - ${{ inputs.jenkins_user }}
+          - ${{ inputs.jenkins_password }}
