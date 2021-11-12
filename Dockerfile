@@ -8,4 +8,4 @@ COPY jenkins_client app/jenkins_client
 
 WORKDIR /app/jenkins_client
 
-ENTRYPOINT ["python", "client.py"]
+ENTRYPOINT ["python", "client.py", "start_job"]
