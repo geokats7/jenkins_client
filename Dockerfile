@@ -1,9 +1,9 @@
 FROM python:3.9-alpine
 
-COPY requirements.txt /app/requirements.txt
+COPY requirements.txt /requirements.txt
 
-RUN pip install -r app/requirements.txt
+RUN pip install -r requirements.txt
 
-COPY jenkins_client /app/jenkins_client
+COPY jenkins_client/client.py /client.py
 
-ENTRYPOINT ["python", "app/jenkins_client/client.py", "start_job"]
+ENTRYPOINT ["python", "/client.py", "start_job"]
