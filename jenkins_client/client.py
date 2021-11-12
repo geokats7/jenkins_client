@@ -1,5 +1,6 @@
 import time
 import sys
+import datetime
 
 from jenkinsapi.jenkins import Jenkins
 from jenkinsapi.build import Build
@@ -56,8 +57,7 @@ class JenkinsClient:
                 raise Exception("Max time out for queue reached!")
 
     def _poll_build_for_status(self, build: Build):
-        print(f"{time.ctime()}: Job started URL: {build.get_build_url()}")
-        print(f"Estimated duration: {build.get_estimated_duration()}")
+        print(f"Estimated duration: {str(datetime.timedelta(seconds=build.get_estimated_duration()))}")
         start_epoch = int(time.time())
 
         while True:
@@ -70,12 +70,12 @@ class JenkinsClient:
             elif result == 'FAILURE':
                 # Do failure steps
                 print(f"{time.ctime()}: Job: {build.job.name} Status: {result}")
-                print(f"View the job logs here: {build.get_result_url()}")
+                print(f"View the job logs here: {build.get_build_url()}")
                 sys.exit(1)
             elif result == 'ABORTED':
                 # Do aborted steps
                 print(f"{time.ctime()}: Job: {build.job.name} Status: {result}")
-                print(f"View more details here: {build.get_result_url()}")
+                print(f"View more details here: {build.get_build_url()}")
                 sys.exit(1)
             else:
                 print(f"{time.ctime()}: Job: {build.job.name} Status: The job is still running. Polling again in {self.job_poll_interval} secs")
