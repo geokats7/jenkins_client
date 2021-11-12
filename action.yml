@@ -7,7 +7,7 @@
       jenkins_job_name:
         description: 'Jenkins job name'
         required: true
-      jenkins_url:
+      jenkins_base_url:
           description: 'Jenkins URL'
           required: true
       jenkins_user:
@@ -21,6 +21,6 @@
       using: "docker"
       args:
           - ${{ inputs.jenkins_job_name }}
-          - --jenkins_base_url=${{ inputs.jenkins_url }}
+          - --jenkins_base_url=${{ inputs.jenkins_base_url }}
           - --username=${{ inputs.jenkins_user }}
           - --password=${{ inputs.jenkins_password }}
