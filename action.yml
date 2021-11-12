@@ -4,6 +4,9 @@
       icon: "check"
       color: orange
   inputs:
+      jenkins_job_name:
+        description: 'Jenkins job name'
+        required: true
       jenkins_url:
           description: 'Jenkins URL'
           required: true
@@ -17,6 +20,7 @@
       image: "Dockerfile"
       using: "docker"
       args:
-          - ${{ inputs.jenkins_url }}
-          - ${{ inputs.jenkins_user }}
-          - ${{ inputs.jenkins_password }}
+          - ${{ inputs.jenkins_job_name }}
+          - --jenkins_base_url=${{ inputs.jenkins_url }}
+          - --username=${{ inputs.jenkins_user }}
+          - --password=${{ inputs.jenkins_password }}
