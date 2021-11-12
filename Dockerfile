@@ -4,8 +4,6 @@ COPY requirements.txt /app/requirements.txt
 
 RUN pip install -r app/requirements.txt
 
-COPY jenkins_client app/jenkins_client
+COPY jenkins_client /app/jenkins_client
 
-WORKDIR /app/jenkins_client
-
-ENTRYPOINT ["python", "client.py", "start_job"]
+ENTRYPOINT ["python", "app/jenkins_client/client.py", "start_job"]
