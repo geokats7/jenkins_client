@@ -69,11 +69,11 @@ class JenkinsClient:
             elif result == 'FAILURE':
                 # Do failure steps
                 print(f"{time.ctime()}: Job: {build.job.name} Status: {result}")
-                break
+                sys.exit(1)
             elif result == 'ABORTED':
                 # Do aborted steps
                 print(f"{time.ctime()}: Job: {build.job.name} Status: {result}")
-                break
+                sys.exit(1)
             else:
                 print(f"{time.ctime()}: Job: {build.job.name} Status: {result}. Polling again in {self.job_poll_interval} secs")
 
