@@ -10,14 +10,14 @@ get status of last builds and many more.
 - Username and password (or API key) for the Jenkins server
 
 #### Example of usage
-~~~
-from qa_tools.jenkins.jenkins_server import JenkinsServer
+~~~python
+from jenkins_client import JenkinsClient
 
-js = JenkinsServer(jenkins_base_url="https://ci.orfium.com/jenkins",
+jc = JenkinsClient(jenkins_base_url="https://ci.orfium.com/jenkins",
                    username="auto",
                    password=*****)
 
-js.start_job(job_name, params) # params must be a python dictionary
+jc.start_job(job_name, params) # params must be a python dictionary
 ~~~
 
 ---
