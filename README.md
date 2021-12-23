@@ -13,7 +13,7 @@ get status of last builds and many more.
 ~~~python
 from jenkins_client import JenkinsClient
 
-jc = JenkinsClient(jenkins_base_url="https://ci.orfium.com/jenkins",
+jc = JenkinsClient(jenkins_base_url="https://my-jenkins-instance.com",
                    username="auto",
                    password=*****)
 
