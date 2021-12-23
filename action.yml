@@ -22,5 +22,5 @@
       args:
           - ${{ inputs.jenkins_job_name }}
           - --jenkins_base_url=${{ inputs.jenkins_base_url }}
-          - --username=${{ inputs.jenkins_user }}
-          - --password=${{ inputs.jenkins_password }}
+          - --jenkins_user=${{ inputs.jenkins_user }}
+          - --jenkins_password=${{ inputs.jenkins_password }}
