@@ -16,11 +16,21 @@
       jenkins_password:
           description: 'Jenkins password'
           required: true
+      jenkins_job_parameters:
+        description: 'Jenkins job parameters'
+        required: false
+      wait_for_result:
+        description: 'Wait for result'
+        required: false
+        default: 'True'
+
   runs:
       image: "Dockerfile"
       using: "docker"
       args:
           - ${{ inputs.jenkins_job_name }}
+          - ${{ inputs.jenkins_job_parameters }}
+          - ${{ inputs.wait_for_result }}
           - --jenkins_base_url=${{ inputs.jenkins_base_url }}
           - --jenkins_user=${{ inputs.jenkins_user }}
           - --jenkins_password=${{ inputs.jenkins_password }}

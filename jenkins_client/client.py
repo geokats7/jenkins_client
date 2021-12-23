@@ -38,21 +38,19 @@ class JenkinsClient:
         job_names_list = [item[0] for item in self._jenkins.items()]
         return job_names_list
 
-    def start_job(self, job_name: str, params: dict = None):
+    def start_job(self, job_name: str, params: dict = None, wait_for_result: bool = True):
         """Start a job and poll it until it's over or timed out."""
-        if params is not None:
-            if type(params) is not dict:
-                print(type(params))
-                raise AttributeError("The parameters should be entered in a dictionary")
+        if params is not None and type(params) is not dict:
+            print(type(params))
+            raise TypeError(f"The parameters should be entered as a dictionary.\nParameters given: {params}.\nHint: Check for missing quotation.")
         job = self._jenkins[job_name]
         queue_item = job.invoke(build_params=params)
         logging.info("Job entered queue")
-        # build = queue_item.block_until_building()
         build = self._poll_job_queue(queue_item)
         logging.info(f"Job started building [Build no. {queue_item.get_build_number()}]")
         logging.info(f"Estimated duration -> {str(datetime.timedelta(seconds=build.get_estimated_duration())).split('.')[0]}")
-        self._poll_build_for_status(build)
-        logging.info(build.get_status())
+        if wait_for_result:
+            self._poll_build_for_status(build)
 
     def _poll_job_queue(self, queue_item: QueueItem):
         elapsed_time = 0
@@ -82,7 +80,7 @@ class JenkinsClient:
             elif result == 'FAILURE':
                 # Do failure steps
                 logging.info(f"{time.ctime()} | Job: {build.job.name} | Status: {result}")
-                logging.info(f"View the job logs here: {build.get_build_url()}")
+                logging.info(f"View more details here: {build.get_build_url()}")
                 sys.exit(1)
             elif result == 'ABORTED':
                 # Do aborted steps
