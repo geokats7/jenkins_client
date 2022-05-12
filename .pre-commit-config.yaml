@@ -1,0 +1,80 @@
+default_stages:
+  - commit
+exclude: node_modules|.git|.tox
+fail_fast: true
+repos:
+  - hooks:
+      - id: detect-secrets
+        args: [ '--baseline', '.pre-commit/.secrets.baseline' ]
+        exclude: (config/settings/test.py|/static|.html|local|README.md)
+    repo: https://github.com/Yelp/detect-secrets.git
+    rev: v1.1.0
+
+  - hooks:
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: debug-statements
+      - id: check-added-large-files
+        args: ['--maxkb=600']
+      - id: check-docstring-first
+      - id: check-case-conflict
+      - id: check-builtin-literals
+      - id: mixed-line-ending
+      - id: check-json
+        files: \.(json)$
+      - id: check-toml
+        files: \.(toml)$
+      - id: fix-encoding-pragma
+        args: [ --remove ]
+    repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+
+  - hooks:
+      - id: isort
+        entry: isort --settings-path=.pre-commit
+    repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.10.1
+
+  - hooks:
+      - exclude: (/settings/)
+        id: black
+        args:
+          - --config=.pre-commit/pyproject.toml
+        language_version: python3
+        require_serial: true
+        types:
+          - python
+    repo: https://github.com/ambv/black
+    rev: 22.3.0
+
+  - hooks:
+      - args:
+          - --config=.pre-commit/setup.cfg
+        id: flake8
+    repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+
+  - hooks:
+      - id: bandit
+        args: [ --verbose, -ll, --recursive, . ]
+    repo: https://github.com/PyCQA/bandit
+    rev: 1.7.1
+
+  - hooks:
+      - entry: pylint --rcfile=.pre-commit/.pylintrc
+        exclude: (/settings/)
+        files: \.py$
+        id: system
+        language: system
+        name: PyLint
+    repo: local
+
+  - hooks:
+      - id: commitizen
+        stages:
+          - commit-msg
+        args:
+          - --config=.pre-commit/pyproject.toml
+    repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.20.4

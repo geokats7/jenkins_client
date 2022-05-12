@@ -1,29 +1,30 @@
-import time
-import sys
-import os
 import datetime
-
-from jenkinsapi.jenkins import Jenkins
-from jenkinsapi.build import Build
-from jenkinsapi.queue import QueueItem
-from jenkinsapi.custom_exceptions import NotBuiltYet
-from requests import HTTPError
-import fire
 import logging
+import os
+import sys
+import time
 
-logging.basicConfig(format='%(levelname)s| %(message)s', level=os.getenv('LOG_LEVEL', 'INFO'))
+import fire
+from jenkinsapi.build import Build
+from jenkinsapi.custom_exceptions import NotBuiltYet
+from jenkinsapi.jenkins import Jenkins
+from jenkinsapi.queue import QueueItem
+from requests import HTTPError
+
+logging.basicConfig(format="%(levelname)s| %(message)s", level=os.getenv("LOG_LEVEL", "INFO"))
 
 
 class JenkinsClient:
-
-    def __init__(self,
-                 jenkins_base_url=os.getenv("JENKINS_BASE_URL"),
-                 jenkins_user=os.getenv("JENKINS_USER"),
-                 jenkins_password=os.getenv("JENKINS_PASSWORD"),
-                 queue_poll_interval=2,
-                 queue_max_timeout=500,
-                 job_poll_interval=20,
-                 overall_max_timeout=1800):
+    def __init__(
+        self,
+        jenkins_base_url=os.getenv("JENKINS_BASE_URL"),
+        jenkins_user=os.getenv("JENKINS_USER"),
+        jenkins_password=os.getenv("JENKINS_PASSWORD"),
+        queue_poll_interval=2,
+        queue_max_timeout=500,
+        job_poll_interval=20,
+        overall_max_timeout=1800,
+    ):
         if jenkins_base_url is None:
             raise AttributeError("JENKINS_BASE_URL is not set. Please provide Jenkins base URL.")
         self.jenkins_base_url = jenkins_base_url
@@ -42,7 +43,9 @@ class JenkinsClient:
         """Start a job and poll it until it's over or timed out."""
         if params is not None and type(params) is not dict:
             print(type(params))
-            raise TypeError(f"The parameters should be entered as a dictionary.\nParameters given: {params}.\nHint: Check for missing quotation.")
+            raise TypeError(
+                f"The parameters should be entered as a dictionary.\nParameters given: {params}.\nHint: Check for missing quotation."
+            )
         job = self._jenkins[job_name]
         queue_item = job.invoke(build_params=params)
         logging.info("Job entered queue")
@@ -73,22 +76,19 @@ class JenkinsClient:
         while True:
             build.poll()
             result = build.get_status()
-            if result == 'SUCCESS':
+            if result == "SUCCESS":
                 # Do success steps
                 logging.info(f"{time.ctime()} | Job: {build.job.name} | Status: {result}")
                 break
-            elif result == 'FAILURE':
+            elif result == "FAILURE" or result == "ABORTED" or result == "UNSTABLE":
                 # Do failure steps
                 logging.info(f"{time.ctime()} | Job: {build.job.name} | Status: {result}")
                 logging.info(f"View more details here: {build.get_build_url()}")
                 sys.exit(1)
-            elif result == 'ABORTED':
-                # Do aborted steps
-                logging.info(f"{time.ctime()} | Job: {build.job.name} | Status: {result}")
-                logging.info(f"View more details here: {build.get_build_url()}")
-                sys.exit(1)
             else:
-                logging.info(f"{time.ctime()} | Job: {build.job.name} | Status: The job is still running. Polling again in {self.job_poll_interval} secs")
+                logging.info(
+                    f"{time.ctime()} | Job: {build.job.name} | Status: The job is still running. Polling again in {self.job_poll_interval} secs"
+                )
 
             cur_epoch = int(time.time())
             if (cur_epoch - start_epoch) > self.overall_max_timeout:
@@ -98,6 +98,5 @@ class JenkinsClient:
             time.sleep(self.job_poll_interval)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     fire.Fire(JenkinsClient)
-
