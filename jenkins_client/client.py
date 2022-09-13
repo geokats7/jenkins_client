@@ -38,7 +38,7 @@ class JenkinsClient:
         job_names_list = [item[0] for item in self._jenkins.items()]
         return job_names_list
 
-    def start_job(self, job_name: str, params: dict = None, wait_for_result: bool = True):
+    def start_job(self, job_name: str, params: dict = None, wait_for_result: bool = True, job_poll_interval: int = 20):
         """Start a job and poll it until it's over or timed out."""
         if params is not None and type(params) is not dict:
             print(type(params))
@@ -50,7 +50,7 @@ class JenkinsClient:
         logging.info(f"Job started building [Build no. {queue_item.get_build_number()}]")
         logging.info(f"Estimated duration -> {str(datetime.timedelta(seconds=build.get_estimated_duration())).split('.')[0]}")
         if wait_for_result:
-            self._poll_build_for_status(build)
+            self._poll_build_for_status(build, job_poll_interval=job_poll_interval)
 
     def _poll_job_queue(self, queue_item: QueueItem):
         elapsed_time = 0
@@ -67,7 +67,7 @@ class JenkinsClient:
             if elapsed_time > self.queue_max_timeout:
                 raise Exception("Max time out for queue reached!")
 
-    def _poll_build_for_status(self, build: Build):
+    def _poll_build_for_status(self, build: Build, job_poll_interval):
         start_epoch = int(time.time())
 
         while True:
@@ -88,14 +88,14 @@ class JenkinsClient:
                 logging.info(f"View more details here: {build.get_build_url()}")
                 sys.exit(1)
             else:
-                logging.info(f"{time.ctime()} | Job: {build.job.name} | Status: The job is still running. Polling again in {self.job_poll_interval} secs")
+                logging.info(f"{time.ctime()} | Job: {build.job.name} | Status: The job is still running. Polling again in {job_poll_interval} secs")
 
             cur_epoch = int(time.time())
             if (cur_epoch - start_epoch) > self.overall_max_timeout:
                 logging.info(f"Overall timeout: No status before timeout of {self.overall_max_timeout} secs")
                 sys.exit(1)
 
-            time.sleep(self.job_poll_interval)
+            time.sleep(job_poll_interval)
 
 
 if __name__ == '__main__':
