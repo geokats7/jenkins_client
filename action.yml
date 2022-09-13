@@ -1,4 +1,4 @@
-  name: jenkins-job
+  name: jenkins-job-action
   description: 'Start Jenkins job'
   branding:
       icon: "check"
@@ -23,6 +23,9 @@
         description: 'Wait for result'
         required: false
         default: 'True'
+      polling_interval:
+        description: 'Interval to poll for result'
+        required: false
 
   runs:
       image: "Dockerfile"
@@ -31,6 +34,7 @@
           - ${{ inputs.jenkins_job_name }}
           - ${{ inputs.jenkins_job_parameters }}
           - ${{ inputs.wait_for_result }}
+          - ${{ inputs.polling_interval }}
           - --jenkins_base_url=${{ inputs.jenkins_base_url }}
           - --jenkins_user=${{ inputs.jenkins_user }}
           - --jenkins_password=${{ inputs.jenkins_password }}
