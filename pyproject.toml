@@ -1,14 +1,14 @@
 [project]
 name = "jenkins_client"
 description = "A python client to trigger Jenkins jobs"
-version = "1.1.0"
+version = "1.2.0"
 authors = [
     { name = "Yorgos Katsaros", email = "yorgos.katsaros@gmail.com" }
 ]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.1.0"
+version = "1.2.0"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version"
