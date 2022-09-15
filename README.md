@@ -10,6 +10,7 @@ The action parameters are the following:
  | `jenkins_user`                     | Yes | The username for the jenkins server                                          |
  | `jenkins_password`                 | Yes | The password/token for the jenkins server                                    |
  | `wait_for_result` | No | If set to true, the action will wait for the job to finish _(default: True)_ |
+ | `polling_interval` | No | Set the time interval to poll Jenkins for job result (seconds)               |
 
 **Note**  
 `jenkins_job_parameters` and `wait_for_result` should be quoted as in the example below.
@@ -29,5 +30,6 @@ jobs:
           jenkins_user: ${{ secrets.JENKINS_USER }}
           jenkins_password: ${{ secrets.JENKINS_PASSWORD }}
           wait_for_result: 'False'
+          polling_interval: 20
 ~~~
 ---
