@@ -1,24 +1,3 @@
-## Jenkins client
-Use this package to perform various jenkins actions such as:  
-trigger jobs remotely, poll the jenkins server for the result of a specific build,  
-get status of last builds and more.
-
-
-#### Required to use the client
-
-- Jenkins server url
-- Username and password (or API key) for the Jenkins server
-
-#### Example of usage
-~~~python
-from jenkins_client import JenkinsClient
-
-jc = JenkinsClient(jenkins_base_url="https://my-jenkins-instance.com",
-                   username="auto",
-                   password=*****)
-
-jc.start_job(job_name, params) # params must be a python dictionary
-~~~
 ### GitHub Action usage
 You can use this package as a GitHub Action to trigger a job remotely and optionally wait for the job's result.  
 The action parameters are the following:  
@@ -52,4 +31,3 @@ jobs:
           wait_for_result: 'False'
 ~~~
 ---
-###### Contact QA team in order to add more actions to the package.
