@@ -1,5 +1,5 @@
-  name: jenkins-job-action
-  description: 'Start Jenkins job'
+  name: 'Trigger Jenkins job with parameters'
+  description: 'Trigger a Jenkins job with parameters and optionally wait for its result.'
   branding:
       icon: "check"
       color: orange
