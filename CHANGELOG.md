@@ -1,3 +1,9 @@
+## v1.3.3 (2023-05-15)
+
+### Fix
+
+- **action.yml**: change action's title and description
+
 ## v1.3.2 (2023-05-15)
 
 ### Fix
