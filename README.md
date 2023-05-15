@@ -12,7 +12,7 @@ The action parameters are the following:
  | `wait_for_result` | No | If set to true, the action will wait for the job to finish _(default: True)_ |
  | `polling_interval` | No | Set the time interval to poll Jenkins for job result (seconds)               |
 
-**Note**  
+**Notes**  
 `jenkins_job_parameters` and `wait_for_result` should be quoted as in the example below.
 
 #### Example of usage:
