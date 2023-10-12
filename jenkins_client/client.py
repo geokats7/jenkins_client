@@ -50,8 +50,16 @@ class JenkinsClient:
         queue_item = job.invoke(build_params=params)
         logging.info("Job entered queue")
         build = self._poll_job_queue(queue_item)
-        logging.info(f"Job started building [Build no. {queue_item.get_build_number()}]")
-        logging.info(f"Estimated duration -> {str(datetime.timedelta(seconds=build.get_estimated_duration())).split('.')[0]}")
+        build_number = queue_item.get_build_number()
+        logging.info(f"Job started building [Build no. {build_number}]")
+
+        # Form the detailed Jenkins Blue Ocean URL and log it
+        job_name_encoded = job_name.replace("/", "%2F")
+        detailed_url = f"{self.jenkins_base_url}/blue/organizations/jenkins/{job_name_encoded}/detail/{job_name_encoded}/{build_number}/pipeline/"
+        logging.info(f"View the build here: {detailed_url}")
+
+        logging.info(
+            f"Estimated duration -> {str(datetime.timedelta(seconds=build.get_estimated_duration())).split('.')[0]}")
         if wait_for_result:
             self._poll_build_for_status(build)
 
