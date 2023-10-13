@@ -48,14 +48,14 @@ class JenkinsClient:
             )
         job = self._jenkins[job_name]
         queue_item = job.invoke(build_params=params)
-        logging.info("Job entered queue")
+        logging.info("Job entered queue. Please wait until the job starts.")
         build = self._poll_job_queue(queue_item)
         build_number = queue_item.get_build_number()
         logging.info(f"Job started building [Build no. {build_number}]")
 
         # Form the detailed traditional Jenkins URL and log it
         job_parts = job_name.split("/")  # Assume the job name contains a single slash for foldering
-        detailed_url = f"{self.jenkins_base_url}/job/{job_parts[0]}/job/{job_parts[1]}/{build_number}/"
+        detailed_url = f"{self.jenkins_base_url}job/{job_parts[0]}/job/{job_parts[1]}/{build_number}/console"
         logging.info(f"View the build here: {detailed_url}")
 
         logging.info(
