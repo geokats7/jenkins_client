@@ -22,7 +22,7 @@ class JenkinsClient:
         jenkins_password=os.getenv("JENKINS_PASSWORD"),
         queue_poll_interval=2,
         queue_max_timeout=500,
-        job_poll_interval=30,
+        job_poll_interval=45,
         overall_max_timeout=1800,
     ):
         if jenkins_base_url is None:
