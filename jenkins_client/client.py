@@ -23,7 +23,7 @@ class JenkinsClient:
         queue_poll_interval=2,
         queue_max_timeout=500,
         job_poll_interval=45,
-        overall_max_timeout=1800,
+        overall_max_timeout=3600,
     ):
         if jenkins_base_url is None:
             raise AttributeError("JENKINS_BASE_URL is not set. Please provide Jenkins base URL.")
