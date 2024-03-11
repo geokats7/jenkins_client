@@ -1,6 +1,6 @@
 ## Jenkins client
-Use this package to perform various jenkins actions such as:  
-trigger jobs remotely, poll the jenkins server for the result of a specific build,  
+Use this package to perform various jenkins actions such as:
+trigger jobs remotely, poll the jenkins server for the result of a specific build,
 get status of last builds and more.
 
 
