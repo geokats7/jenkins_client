@@ -54,11 +54,17 @@ class JenkinsClient:
         logging.info(f"Job started building [Build no. {build_number}]")
 
         # Form the detailed traditional Jenkins URL and log it
-        job_parts = job_name.split("/")  # Assume the job name contains a single slash for foldering
-        detailed_url = f"{self.jenkins_base_url}job/{job_parts[0]}/job/{job_parts[1]}/{build_number}/console"
+        # Assume the job name contains a single slash for folder and handle also the case where the job is not in a folder
+        job_parts = job_name.split("/")
+        if len(job_parts) == 1:
+            detailed_url = f"{self.jenkins_base_url}job/{job_parts[0]}/{build_number}/console"
+        else:
+            detailed_url = f"{self.jenkins_base_url}job/{job_parts[0]}/job/{job_parts[1]}/{build_number}/console"
         logging.info(f"View the build here: {detailed_url}")
 
-        logging.info(f"Estimated duration -> {str(datetime.timedelta(seconds=build.get_estimated_duration())).split('.')[0]}")
+        logging.info(
+            f"Estimated duration -> {str(datetime.timedelta(seconds=build.get_estimated_duration())).split('.')[0]}"
+        )
         if wait_for_result:
             self._poll_build_for_status(build)
 
