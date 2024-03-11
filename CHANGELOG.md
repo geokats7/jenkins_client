@@ -1,3 +1,24 @@
+## v0.2.0 (2024-03-11)
+
+### Feat
+
+- introduce automatic release
+- add input parameter for polling interval
+- **client.py**: print the console url
+- **client.py**: increase interval again , better print
+- **client.py**: increase interval, better print
+- **client.py**: print job url
+
+### Fix
+
+- readme file
+- **action.yml**: change action's title and description
+- update README file
+- fix security issues
+- update setup-python
+- fix precommit issues
+- **client.py**: bump timeout to one hour
+
 ## v1.3.3 (2023-05-15)
 
 ### Fix
